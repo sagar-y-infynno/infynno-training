@@ -1,0 +1,65 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Container } from '@mui/material';
+import Row from './Row';
+
+export default function View() {
+    const [e_data, setEData] = useState([]);
+    const [loader, setLoader] = useState(false);
+
+    // const addData = () => {
+    //     (async function () {
+    //         let r_data = await axios.get('https://reqres.in/api/users');
+    //         setEData(r_data.data.data);
+    //         console.log(r_data.data.data);
+    //     })()
+    // }
+
+    useEffect(() => {
+        (async function () {
+            setLoader(true);
+            let r_data = await axios.get('https://reqres.in/api/users');    
+            // let r_data = await axios.get('https://dummy.restapiexample.com/api/v1/employees');
+            setEData(r_data.data.data);
+            setLoader(false);
+            console.log(r_data.data.data);
+        })()
+    }, []);
+
+    if(loader) {
+        return (
+            <p>Loading...</p>
+        )
+    }else {
+        // avatar: "https://reqres.in/img/faces/1-image.jpg"
+        // email: "george.bluth@reqres.in"
+        // first_name: "George"
+        // id: 1
+        // last_name: "Bluth"
+        return (
+            <Container component="main" maxWidth="sm" >
+                {/* <button onClick={addData} >Add Data</button> */}
+                <table className='random-user-table'>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Avatar</th>
+                            <th>Email</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                {e_data.map((user, id) => {
+                    return (
+                        <Row user={user} />
+                    )
+                })}
+                    </tbody>
+                </table>
+            </Container>
+        )
+    }
+
+}
