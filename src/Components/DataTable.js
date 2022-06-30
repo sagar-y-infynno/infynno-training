@@ -14,8 +14,8 @@ import { DataGrid } from '@mui/x-data-grid';
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'firstName', headerName: 'First name', width: 130 },
-    { field: 'lastName', headerName: 'Last name', width: 130 },
+    { field: 'first_Name', headerName: 'First name', width: 130 },
+    { field: 'last_Name', headerName: 'Last name', width: 130 },
     {
         field: 'email',
         headerName: 'Email',
@@ -28,7 +28,7 @@ const columns = [
         sortable: false,
         width: 160,
         valueGetter: (params) =>
-            `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+            `${params.row.first_Name || ''} ${params.row.last_Name || ''}`,
     },
 ];
 
@@ -44,8 +44,6 @@ export default function DataTable() {
         setEData(e_data.filter((val, id) => val.id !== tid));
         console.log(`delete ${tid} `);
     }
-
-    
 
     useEffect(() => {
         (async function () {

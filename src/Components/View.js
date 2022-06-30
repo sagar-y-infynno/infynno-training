@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Container, Box, CircularProgress } from '@mui/material';
+import { 
+    Container, 
+    Box, 
+    CircularProgress, 
+    Button 
+} from '@mui/material';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
@@ -73,9 +78,9 @@ export default function View() {
                         {e_data.email}
                         </Typography>
                     </CardContent>
-                    {/* <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
-                        <p> tdt </p>
-                    </Box> */}
+                    <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
+                        <Button variant="outlined" > Delete </Button>
+                    </Box>
                 </Box>
             </Container>
         );

@@ -9,19 +9,31 @@ import Paper from '@mui/material/Paper';
 import { Container, Button, CircularProgress } from '@mui/material';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import DDialog from "./DDialog";
 
 export default function TTable() {
 
     const [e_data, setEData] = useState([]);
+    const [target_del, setDTarget] = useState(-1);
+    const [modal_flag, setModalFlag] = useState(false);
     const [loader, setLoader] = useState(false);
 
+    const handleModel = (action) => {
+        if(action === true) {
+            deleteUser(target_del) ;
+        }
+        setModalFlag(false);
+    };
+
     const deleteUser = tid => {
-        (async function() {
-            //==== old api
-            await axios.delete(`https://reqres.in/api/users/${tid}`);  
-        })();
-        setEData(e_data.filter((val, id) => val.id !== tid));
-        console.log(`delete ${tid} `);
+        (target_del !== -1) &&
+            (async function() {
+                //==== old api
+                console.log(`delete ${tid} `);
+                await axios.delete(`https://reqres.in/api/users/${tid}`);  
+                setEData(e_data.filter((val, id) => val.id !== tid));
+                setDTarget(-1);
+            })();
     }
 
     useEffect(() => {
@@ -45,13 +57,15 @@ export default function TTable() {
 
     if(loader) {
         return (
-            <Container sx={{marginBlock: "40px", height: '100vh', display: 'flex', justifyContent: "center", alignItems: "center"}} component="main" maxWidth="lg">
+            <Container sx={{marginBlock: "40px", height: '100vh', display: 'flex', justifyContent: "center", alignItems: "center"}} 
+                component="main" maxWidth="lg">
                 <CircularProgress />
             </Container>
         )
     }
     return (
         <Container sx={{marginBlock: "40px"}} component="main" maxWidth="lg">
+            <DDialog open={modal_flag} handleModel={handleModel} />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
@@ -79,7 +93,13 @@ export default function TTable() {
                                 <Link to={"/view/"+row.id} >
                                     <Button variant="outlined" >View</Button>
                                 </Link>
-                                <Button sx={{marginLeft: "10px"}} variant="outlined" onClick={ () => { deleteUser(row.id) } } >Delete</Button>
+                                <Button sx={{marginLeft: "10px"}} variant="outlined" 
+                                    onClick={ () => { 
+                                        setModalFlag(true);
+                                        setDTarget(row.id) ;
+                                    } } >
+                                    Delete
+                                </Button>
                             </TableCell>
                         </TableRow>
                     ))}
