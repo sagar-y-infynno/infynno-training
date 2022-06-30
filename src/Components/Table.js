@@ -20,7 +20,7 @@ export default function TTable() {
 
     const handleModel = (action) => {
         if(action === true) {
-            deleteUser(target_del) ;
+            deleteUser(target_del);
         }
         setModalFlag(false);
     };
@@ -30,9 +30,14 @@ export default function TTable() {
             (async function() {
                 //==== old api
                 console.log(`delete ${tid} `);
-                await axios.delete(`https://reqres.in/api/users/${tid}`);  
-                setEData(e_data.filter((val, id) => val.id !== tid));
-                setDTarget(-1);
+                const { status } = await axios.delete(`https://reqres.in/api/users/${tid}`);  
+                if(status === 204 ) {
+                    console.log('deleted successfully')
+                    setEData(e_data.filter((val, id) => val.id !== tid));
+                    setDTarget(-1);
+                }else {
+                    console.log("not deleted");
+                }
             })();
     }
 
@@ -94,6 +99,7 @@ export default function TTable() {
                                     <Button variant="outlined" >View</Button>
                                 </Link>
                                 <Button sx={{marginLeft: "10px"}} variant="outlined" 
+                                    color="error"
                                     onClick={ () => { 
                                         setModalFlag(true);
                                         setDTarget(row.id) ;

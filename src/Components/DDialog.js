@@ -23,7 +23,7 @@ const DDialog = (props) => {
                 <Button autoFocus onClick={() => props.handleModel(false)}>
                     Cancel
                 </Button>
-                <Button onClick={() => props.handleModel(true)} autoFocus>
+                <Button onClick={() => props.handleModel(true)} color="error" autoFocus>
                     Delete
                 </Button>
             </DialogActions>

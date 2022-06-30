@@ -1,62 +1,72 @@
-import * as React from 'react';
+import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { CircularProgress, Container } from '@mui/material';
+import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
 
-// function Copyright(props) {
-//     return (
-//         <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//         {'Copyright © '}
-//         <Link color="inherit" href="https://mui.com/">
-//             Your Website
-//         </Link>{' '}
-//         {new Date().getFullYear()}
-//         {'.'}
-//         </Typography>
-//     );
-// }
-
-const theme = createTheme();
 
 export default function Form() {
+    const [user, setUser] = React.useState({
+        email: '',
+        avatar: '',
+        last_name: '',
+        first_name: ''
+    });
+    const [loader, setLoader] = React.useState(false);
+    
+    const { id } = useParams();
+    
+    React.useEffect(() => {
+        // console.log(id);
+        (async function () {
+            
+            // ==== new api
+            // let { data } = await axios.get(`https://random-data-api.com/api/users/random_user?id=${id}`);      
+            // setEData(data);
+
+            // ==== old api
+            let { data } = await axios.get(`https://reqres.in/api/users/${id}`);
+            setUser(data.data);
+            // console.log(user);
+        })();
+    }, []);
+
+    const updateUser = async () => {
+        setLoader(true);
+        return await axios.put(`https://reqres.in/api/users/${id}`, user);
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-        email: data.get('email'),
-        password: data.get('password'),
+
+        updateUser().then((res) => {
+            setLoader(false);
+            if(res.status === 200) {
+                console.log("updated successfully")
+            }else {
+                console.log("not updated")
+            }
         });
+
+        console.log(user);
     };
 
+    const handleFields = (k, e) => {
+        setUser({...user, [k]: e.target.value});
+    }
+
     return (
-        <ThemeProvider theme={theme}>
-        <Grid container component="main" sx={{ height: '100vh' }}>
-            <CssBaseline />
-            {/* <Grid
-            item
-            xs={false}
-            sm={4}
-            md={7}
-            sx={{
-                backgroundImage: 'url(https://source.unsplash.com/random)',
-                backgroundRepeat: 'no-repeat',
-                backgroundColor: (t) =>
-                t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-            }}
-            /> */}
-            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={8} square>
+        <Container maxWidth="sm" >
+        {/* <Grid container component="main" sx={{ height: '100vh' }}> */}
+            {/* <CssBaseline /> */}
+            {/* <Grid item xs={12} sm={12} md={12} component={Paper} elevation={8} square> */}
             <Box
                 sx={{
                 my: 8,
@@ -64,64 +74,93 @@ export default function Form() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
+                color: '#fff'
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                {/* <LockOutlinedIcon /> */}
-                </Avatar>
+                {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}></Avatar> */}
                 <Typography component="h1" variant="h5">
-                Sign in
+                    Update Details
                 </Typography>
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                
+                {/* <img src={user.avatar} alt="afadf" />
+                
+                <Button
+                    variant="contained"
+                    component="label"
+                    >
+                    Upload File
+                    <input
+                        type="file"
+                        onChange={e => handleFields('avatar', e)}
+                        hidden
+                    />
+                </Button> */}
+                
                 <TextField
+                    InputProps={{ sx: { color: '#fff' } }}
                     margin="normal"
                     required
                     fullWidth
                     id="email"
                     label="Email Address"
                     name="email"
+                    value={user.email}
+                    onChange={(e) => handleFields('email', e)}
                     autoComplete="email"
                     autoFocus
                 />
+
                 <TextField
+                    InputProps={{ sx: { color: '#fff' } }}
                     margin="normal"
                     required
                     fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
+                    id="first_name"
+                    label="First Name"
+                    name="first_name"
+                    value={user.first_name}
+                    onChange={(e) => handleFields('first_name', e)}
+                    autoComplete="first_name"
                 />
-                <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
+                <TextField
+                    InputProps={{ sx: { color: '#fff' } }}
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="last_name"
+                    label="Last Name"
+                    name="last_name"
+                    value={user.last_name}
+                    onChange={(e) => handleFields('last_name', e)}
+                    autoComplete="last_name"
                 />
+
                 <Button
                     type="submit"
                     fullWidth
+                    size="large"
                     variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
+                    sx={{ mt: 3, mb: 2, width: "max-content" }}
                 >
-                    Sign In
+                { loader ? <CircularProgress color='error' /> : "Update" }
                 </Button>
-                <Grid container>
-                    <Grid item xs>
-                    <Link href="#" variant="body2">
-                        Forgot password?
-                    </Link>
-                    </Grid>
-                    <Grid item>
-                    <Link href="#" variant="body2">
-                        {"Don't have an account? Sign Up"}
-                    </Link>
-                    </Grid>
-                </Grid>
-                {/* <Copyright sx={{ mt: 5 }} /> */}
+                <Link to="/">
+                    <Button
+                        type="submit"
+                        fullWidth
+                        size="large"    
+                        variant="outlined"
+                        color="info"
+                        sx={{ mt: 3, ml: 2, mb: 2, width: "max-content" }}
+                    >
+                        Back
+                    </Button>
+                </Link>
                 </Box>
             </Box>
-            </Grid>
-        </Grid>
-        </ThemeProvider>
+            {/* </Grid> */}
+        {/* </Grid> */}
+        </Container>
     );
 }

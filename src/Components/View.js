@@ -6,10 +6,11 @@ import {
     Container, 
     Box, 
     CircularProgress, 
-    Button 
+    Button, 
+    Divider
 } from '@mui/material';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 export default function View() {
     const [e_data, setEData] = useState([]);
@@ -43,45 +44,37 @@ export default function View() {
         );
     }else {
         return (
-            <Container sx={{ display: 'flex', width: 'max-width', margin: '50px auto' }} 
+            <Container
+                sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
                 component="main" maxWidth="sm" >
-                {/* <Card sx={{ maxWidth: 345, margin: '50px auto' }}>
-                    <CardActionArea>
-                        <CardMedia
+                <Box sx={{ display: 'flex', width: 'max-width', margin: '50px auto' }}>
+                    <CardMedia
                         component="img"
-                        height="200"
+                        sx={{ width: 151 }}
                         image={e_data.avatar}
-                        alt="random-image"
-                        />
-                        <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                            {e_data.first_name} {e_data.last_name}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
+                        alt="user"
+                    />
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'end', width: "30vw" }}>
+                        <CardContent sx={{ flex: '1 0 auto', justifyContent: 'end', p: '0', textAlign: "right"  }}>
+                            <Typography component="div" color="white" variant="h5">
+                                {e_data.first_name} {e_data.last_name}
+                            </Typography>
+                            <Typography variant="subtitle1" color="text.secondary" component="div">
                             {e_data.email}
-                        </Typography>
+                            </Typography>
                         </CardContent>
-                    </CardActionArea>
-                </Card> */}
-                <CardMedia
-                    component="img"
-                    sx={{ width: 151 }}
-                    image={e_data.avatar}
-                    alt="user"
-                />
-                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <CardContent sx={{ flex: '1 0 auto' }}>
-                        <Typography component="div" color="text.primary" variant="h5">
-                            {e_data.first_name} {e_data.last_name}
-                        </Typography>
-                        <Typography variant="subtitle1" color="text.secondary" component="div">
-                        {e_data.email}
-                        </Typography>
-                    </CardContent>
-                    <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
-                        <Button variant="outlined" > Delete </Button>
+                        <Link to={`/edit/${e_data.id}`} >
+                            <Button variant="contained" sx={{ width: 'max-content' }} color="info" > Edit </Button>
+                        </Link>
                     </Box>
+                    {/* <Divider /> */}
+                    {/* <Box sx={{ display: 'flex', alignItems: 'end', pl: 1, pb: 1 }}>
+                        <Button variant="contained" color="info" > Edit </Button>
+                    </Box> */}
                 </Box>
+                <Link to="/">
+                    <Button variant="outlined" > Back </Button>
+                </Link>
             </Container>
         );
     }
