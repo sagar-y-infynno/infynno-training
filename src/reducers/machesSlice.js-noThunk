@@ -1,0 +1,34 @@
+import { createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+
+const matchesSlice = createSlice({
+  name: 'matches',
+  initialState: {
+    finished: [],
+    upcoming: [],
+    live: []
+  },
+  reducers: {
+    setFinished: (state, action) => {
+      state.finished = action.payload
+    }
+  }
+});
+
+export const selectFinished = state => state.matches.finished;
+export const selectMatches = state => state.matches;
+
+export const fetchFinished = async dispatch => {
+  try{
+    const url = encodeURIComponent("https://cricket.sportmonks.com/api/v2.0/fixtures?api_token=pCKbJYBnFQkyAqEEfEgQAGkFDCHYjeV7PwTpvC6qtCN9wa6mp3aJ512MJjYh&include=localteam,visitorteam,runs.team,league");
+    const { data } = await axios.get(`https://api.allorigins.win/raw?url=${url}`);
+    console.log(data.data.filter((m) => m.status === "Finished").splice(0, 15));
+    dispatch(setFinished(data.data.filter((m) => m.status === "Finished").splice(0, 15)));
+  }catch(er) {
+    console.log(er, 'custom error');
+  }
+}
+
+export const { setFinished } = matchesSlice.actions;
+
+export default matchesSlice.reducer;

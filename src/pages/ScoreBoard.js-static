@@ -1,0 +1,374 @@
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import ordinal from 'ordinal';
+
+export default function ScoreBoard() {
+  const [match_data, setMatchData ] = useState([]);
+  const [openTab, setOpenTab] = useState(1);
+  const { fix_id } = useParams();
+
+// https://cricket.sportmonks.com/api/v2.0/fixtures/:FIXTURE_ID?include=batting
+  useEffect(() => {
+    console.log("score board for "+fix_id+" fixture id.");
+    (async () => {
+      const url = encodeURIComponent(`https://cricket.sportmonks.com/api/v2.0/fixtures/${fix_id}?api_token=pCKbJYBnFQkyAqEEfEgQAGkFDCHYjeV7PwTpvC6qtCN9wa6mp3aJ512MJjYh&include=localteam,visitorteam,runs.team,league`);
+      console.log(url);
+      const res = await axios.get(`https://api.allorigins.win/raw?url=${url}`);
+      console.log(res);
+      setMatchData(res.data.data);
+      // let finished_matches = res.data.data.filter((m) => m.status === "Finished");
+    })();
+  }, [fix_id]);
+
+  if(match_data.length === 0) {
+    return <p>loading...</p>
+  }
+
+  return (
+    <>
+      <div className="max-w-[672px] w-full px-5 py-[20px] mx-auto">
+        {/* header */}
+        <div className="match-card-details pb-[8px] pt-[22px] rounded-[0px_0px_12px_12px]">
+          <div className="w-full">
+            <div className="flex justify-between w-full px-[20px]">
+              <div className="flex flex-col justify-center items-start">
+                <div className="flex justify-center items-center">
+                  <label className="text-[11px] leading-[1.27] tracking-[0.3px] rounded-[2px] bg-[#9d2a13] text-white p-[3px_5px]">
+                    {match_data.localteam.code}
+                  </label>
+                  <label className="text-[11px] leading-[1.27] tracking-[0.3px] m-[5px] text-[#787878]">
+                    {ordinal(match_data.runs[0].inning)} INN
+                  </label>
+                </div>
+                <div className="flex justify-center items-baseline">
+                  <label className="font-bold text-black text-[28px] leading-[42px] tracking-[0.14px]">
+                    {match_data.runs[0].score +
+                      "/" +
+                      match_data.runs[0].wickets}
+                  </label>
+                  <label className="text-[12px] leading-[1.33] tracking-[0.4px] font-bold m-[5px] text-[#787878]">
+                    ({match_data.runs[0].overs})
+                  </label>
+                </div>
+              </div>
+              <div className="flex relative justify-center items-center">
+                <div className="bg-[#dcdcdc] w-[1px] h-[60px] "></div>
+                <label className="text-[15px] absolute block leading-[24px] text-center text-[#99a0b3] bg-[#dcdcdc] h-[24px] w-[24px] rounded-full">
+                  V
+                </label>
+              </div>
+              <div className="flex flex-col justify-center items-end">
+                <div className="flex justify-center items-center">
+                  <label className="text-[11px] leading-[1.27] tracking-[0.3px] m-[5px] text-[#787878]">
+                    {ordinal(match_data.runs[1].inning)} INN
+                  </label>
+                  <label className="text-[11px] leading-[1.27] tracking-[0.3px] rounded-[2px] bg-[#9d2a13] text-white p-[3px_5px]">
+                    {match_data.visitorteam.code}
+                  </label>
+                </div>
+                <div className="flex justify-center items-baseline">
+                  <label className="text-[12px] leading-[1.33] tracking-[0.4px] font-bold m-[5px] text-[#787878]">
+                    ({match_data.runs[1].overs})
+                  </label>
+                  <label className="font-bold text-black text-[28px] leading-[42px] tracking-[0.14px]">
+                    {match_data.runs[1].score +
+                      "/" +
+                      match_data.runs[1].wickets}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* header */}
+        <div className="">
+          <p className="text-[14px] text-theme-main font-bold mt-[10px] text-center tracking-[0.28px] leading-[20px] mb-[15px]">
+            {match_data.note}
+          </p>
+        </div>
+        <div className="flex flex-wrap border-t border-t-light-border">
+          {/* scores  =========| class="[a-zA-Z0-9- ]+ |============ */}
+          <div className="w-full" >
+            {/* <div > */}
+            <div className="w-full flex justify-between pt-[16px]" >
+              <div className='flex h-max items-center' >
+                <div >
+                  <div className='flex h-max items-center' >
+                    <label 
+                      className="leading-[20px] uppercase tracking-[0.1px] text-left text-[14px] font-bold"
+                      aria-multiline="true"
+                      aria-rowcount="1" >
+                      Target
+                    </label>
+                    <label
+                    className="pl-[8px] leading-[20px] uppercase tracking-[0.25px] text-left text-[14px]"
+                      aria-multiline="true"
+                      aria-rowcount="1">
+                      161
+                    </label>
+                  </div>
+                </div>
+                <div >
+                  <div className='flex h-max items-center' >
+                    <label
+                      className='font-bold uppercase text-[14px] leading-[0.1px]'
+                      aria-multiline="true"
+                      aria-rowcount="1">
+                      P'ship
+                    </label>
+                    <label aria-multiline="true"
+                      className="pl-[8px] leading-[20px] uppercase tracking-[0.25px] text-left text-[14px]"
+                      aria-rowcount="1">
+                      1 (20)
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center cursor-pointer" >
+                {/* color: rgb(0, 129, 255); */}
+                <label aria-multiline="true"
+                className="font-bold text-[12px] text-blue-highlight leading-[16px] tracking-[0.2px] "
+                  aria-rowcount="1" >
+                  MORE
+                </label>
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="#0081ff"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8.207 10a.5.5 0 00-.353.854l3.792 3.792a.5.5 0 00.708 0l3.793-3.792a.5.5 0 00-.354-.854H8.207z"
+                    fill="#0081ff"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            {/* </div> */}
+            <div >
+              <div className="p-[2px_4px] w-full flex justify-center items-center rounded-[2px] box-border text-[#66718c] bg-[#e6e7ec] mt-[18px]" >
+                <label className="font-normal flex-1 text-[10px] leading-[1.2] tracking-[1.5px]" >BATSMEN</label>
+                <label className="font-normal min-w-[60px] text-[10px] leading-[1.2] tracking-[1.5px]" >R</label>
+                <label className="font-normal min-w-[60px] text-[10px] leading-[1.2] tracking-[1.5px]" >B</label>
+                <label className="font-normal min-w-[60px] text-[10px] leading-[1.2] tracking-[1.5px]" >4s</label>
+                <label className="font-normal min-w-[60px] text-[10px] leading-[1.2] tracking-[1.5px]" >6s</label>
+                <label className="font-normal min-w-[60px] text-[10px] leading-[1.2] tracking-[1.5px]" >S/R</label>
+              </div>
+              <div className="p-[8px_4px_4px] w-full flex justify-center box-border text-[#66718c] mt-0 border-b-none rounded-[2px] items-center" >
+                <label className="leading-[1.33] font-bold text-[14px] cursor-pointer flex-1 text-blue-highlight tracking-[0.4px]" >Ryan Patel*</label>
+                <label className="text-[#141414] font-bold min-w-[60px] text-[13px] leading-[1.2] tracking-[1.5px] " >
+                  22
+                </label>
+                <label className="text-[#787878] font-normal min-w-[60px] text-[13px] leading-[1.2] tracking-[1.5px]" >
+                  108
+                </label>
+                <label className="text-[#787878] font-normal min-w-[60px] text-[13px] leading-[1.2] tracking-[1.5px]" >
+                  1
+                </label>
+                <label className="text-[#787878] font-normal min-w-[60px] text-[13px] leading-[1.2] tracking-[1.5px]" >
+                  0
+                </label>
+                <label className="text-[#787878] font-normal min-w-[60px] text-[13px] leading-[1.2] tracking-[1.5px]" >
+                  20.4
+                </label>
+              </div>
+              <div className="p-[8px_4px_4px] w-full flex justify-center box-border text-[#66718c] mt-0 border-b-none rounded-[2px] items-center" >
+                <label className="leading-[1.33] font-normal text-[14px] cursor-pointer flex-1 text-blue-highlight tracking-[0.4px]" >
+                  Thomas Lawes
+                </label>
+                <label className="text-[#141414] font-bold min-w-[60px] text-[13px] leading-[1.2] tracking-[1.5px] " >
+                  0
+                </label>
+                <label className="text-[#787878] font-normal min-w-[60px] text-[13px] leading-[1.2] tracking-[1.5px]" >
+                  12
+                </label>
+                <label className="text-[#787878] font-normal min-w-[60px] text-[13px] leading-[1.2] tracking-[1.5px]" >
+                  0
+                </label>
+                <label className="text-[#787878] font-normal min-w-[60px] text-[13px] leading-[1.2] tracking-[1.5px]" >
+                  0
+                </label>
+                <label className="text-[#787878] font-normal min-w-[60px] text-[13px] leading-[1.2] tracking-[1.5px]" >
+                  0.0
+                </label>
+              </div>
+            </div>
+            <div >
+              <div className="p-[2px_4px] w-full flex justify-center items-center rounded-[2px] box-border text-[#66718c] bg-[#e6e7ec] mt-[18px]" >
+                <label className="font-normal flex-1 text-[10px] leading-[1.2] tracking-[1.5px]" >BOWLER</label>
+                <label className="font-normal min-w-[60px] text-[10px] leading-[1.2] tracking-[1.5px]" >O</label>
+                <label className="font-normal min-w-[60px] text-[10px] leading-[1.2] tracking-[1.5px]" >M</label>
+                <label className="font-normal min-w-[60px] text-[10px] leading-[1.2] tracking-[1.5px]" >R</label>
+                <label className="font-normal min-w-[60px] text-[10px] leading-[1.2] tracking-[1.5px]" >W</label>
+                <label className="font-normal min-w-[60px] text-[10px] leading-[1.2] tracking-[1.5px]" >ECO</label>
+              </div>
+              <div className="p-[8px_4px_4px] w-full flex justify-center box-border text-[#66718c] mt-0 border-b-none rounded-[2px] items-center" >
+                <label className="leading-[1.33] font-bold text-[14px] cursor-pointer flex-1 text-blue-highlight tracking-[0.4px]" >
+                  Simon Harmer
+                </label>
+                <label className="text-[#787878] font-normal min-w-[60px] text-[13px] leading-[1.2] tracking-[1.5px]" >
+                  10.0
+                </label>
+                <label className="text-[#787878] font-normal min-w-[60px] text-[13px] leading-[1.2] tracking-[1.5px]" >
+                  4
+                </label>
+                <label className="text-[#787878] font-normal min-w-[60px] text-[13px] leading-[1.2] tracking-[1.5px]" >
+                  17
+                </label>
+                <label className="text-[#141414] font-bold min-w-[60px] text-[13px] leading-[1.2] tracking-[1.5px] "  >
+                  1
+                </label>
+                <label className="text-[#787878] font-normal min-w-[60px] text-[13px] leading-[1.2] tracking-[1.5px]" >
+                  1.7
+                </label>
+              </div>
+            </div>
+            <div className='flex items-center justify-start w-full box-border p-[10px]' >
+              <label className="min-w-[20px] text-center border text-white bg-[#f0f1f4] border-[#c8c8c8] leading-[15px] block rounded-[20px] h-[20px] text-[14px] p-[2px] mr-[5px]" >
+                <span className="text-[#99a0b3]" >
+                  0
+                </span>
+              </label>
+              <label className="min-w-[20px] text-center border text-white bg-white border-[#c8c8c8] leading-[15px] block rounded-[20px] h-[20px] text-[14px] p-[2px] mr-[5px]"  >
+                <span className="text-[#001240]" >
+                  1
+                </span>
+              </label>
+              <label className="min-w-[20px] text-center border text-white bg-[#f0f1f4] border-[#c8c8c8] leading-[15px] block rounded-[20px] h-[20px] text-[14px] p-[2px] mr-[5px]"  >
+                <span className="text-[#99a0b3]" >
+                  0
+                </span>
+              </label>
+              <label className="min-w-[20px] text-center border text-white bg-[#f0f1f4] border-[#c8c8c8] leading-[15px] block rounded-[20px] h-[20px] text-[14px] p-[2px] mr-[5px]"  >
+                <span className="text-[#99a0b3]" >
+                  0
+                </span>
+              </label>
+              <label className="min-w-[20px] text-center border text-white bg-[#f0f1f4] border-[#c8c8c8] leading-[15px] block rounded-[20px] h-[20px] text-[14px] p-[2px] mr-[5px]"  >
+                <span className="text-[#99a0b3]" >
+                  0
+                </span>
+              </label>
+              <label className="min-w-[20px] text-center border text-white bg-[#f0f1f4] border-[#c8c8c8] leading-[15px] block rounded-[20px] h-[20px] text-[14px] p-[2px] mr-[5px]"  >
+                <span className="text-[#99a0b3]" >
+                  0
+                </span>
+              </label>
+            </div>
+          </div>
+          {/* scores */}
+          <div className="w-full">
+            <ul className="flex mb-0 list-none flex-wrap mt-3 flex-row border-y border-y-light-border" >
+              <li className="-mb-px last:mr-0 flex-auto text-center cursor-pointer">
+                <p 
+                  className={
+                    "text-xs font-bold px-5 py-3  block leading-normal " +
+                    (openTab === 1
+                      ? "border-b-4 border-theme-secondary"
+                      : "text-[#66718c]")
+                  }
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setOpenTab(1);
+                  }}
+                >
+                  Fantasy
+                </p>
+              </li>
+              <li className="-mb-px last:mr-0 flex-auto text-center cursor-pointer">
+                <p
+                  className={
+                    "text-xs font-bold px-5 py-3  block leading-normal " +
+                    (openTab === 2
+                      ? "border-b-4 border-theme-secondary"
+                      : "text-[#66718c]")
+                  }
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setOpenTab(2);
+                  }}
+                >
+                  Info
+                </p>
+              </li>
+              <li className="-mb-px last:mr-0 flex-auto text-center cursor-pointer">
+                <p
+                  className={
+                    "text-xs font-bold px-5 py-3  block leading-normal " +
+                    (openTab === 3
+                      ? "border-b-4 border-theme-secondary"
+                      : "text-[#66718c]")
+                  }
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setOpenTab(3);
+                  }}
+                >
+                  Live
+                </p>
+              </li>
+              <li className="-mb-px last:mr-0 flex-auto text-center cursor-pointer">
+                <p
+                  className={
+                    "text-xs font-bold px-5 py-3  block leading-normal " +
+                    (openTab === 4
+                      ? "border-b-4 border-theme-secondary"
+                      : "text-[#66718c]")
+                  }
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setOpenTab(4);
+                  }}
+                >
+                  Scorecard
+                </p>
+              </li>
+              <li className="-mb-px last:mr-0 flex-auto text-center cursor-pointer">
+                <p
+                  className={
+                    "text-xs font-bold px-5 py-3  block leading-normal " +
+                    (openTab === 5
+                      ? "border-b-4 border-theme-secondary"
+                      : "text-[#66718c]")
+                  }
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setOpenTab(5);
+                  }}
+                >
+                  Squad
+                </p>
+              </li>
+            </ul>
+            <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 rounded">
+              <div className="px-4 py-5 flex-auto">
+                <div className="tab-content tab-space">
+                  <div
+                    className={openTab === 1 ? "block" : "hidden"}
+                    id="link1"
+                  >
+                    <p>test</p>
+                  </div>
+                  <div
+                    className={openTab === 2 ? "block" : "hidden"}
+                    id="link2"
+                  >
+                    <p>temp</p>
+                  </div>
+                  <div
+                    className={openTab === 3 ? "block" : "hidden"}
+                    id="link3"
+                  >
+                    <p>...</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

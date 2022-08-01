@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* .match-card-top {
+  background-image: attr(data-image-src url);
+} */
+
+/* slider  */
+
+button.slick-arrow{
+  @apply cursor-pointer top-[100px] h-[48px] w-[48px] 
+bg-white rounded-full z-[99]
+  flex items-center justify-center;
+  box-shadow: rgb(0 0 0 / 10%) 0px 0px 8px 0px;
+}
+.slick-prev:before {
+  content: url('./assets/svgs/arrow-prev.svg');  
+}
+
+.slick-next:before {
+  content: url('./assets/svgs/arrow-prev.svg');
+    transform: rotate(180deg);
+    display: block;
+}
+
+.slick-next:focus, .slick-next:hover, .slick-prev:focus, .slick-prev:hover {
+  background: white;
+  outline: none;
+}
+
+.slick-next {
+  visibility: hidden;
+  right: -18px;
+}
+
+.slick-prev{
+  visibility: hidden;
+  left: -18px;
+}
+
+.live-match .slick-prev, .live-match .slick-next, .match-slider-container:hover .slick-next, .match-slider-container:hover .slick-prev  {
+  visibility: visible;
+  transition: all 1s;
+  transition-delay: .2s;
+}
+
+.live-match ul.slick-dots{
+  position: absolute;
+  top: -42px;
+  height: max-content;
+  width: max-content;
+  right: 0;
+}
+
+.slick-dots li {
+  background: #334166;
+  border-radius: 50%;
+  @apply h-[8px] w-[8px] mx-[3px];
+}
+.slick-dots li.slick-active {
+  background: #99a0b3;
+}
+.slick-dots li button:before{
+  content: none;
+}
+/* slider  */
+
+/* match card */
+.match-card {
+  @apply px-[8px] rounded-[12px] h-auto overflow-hidden relative w-full no-underline;
+}
+.play-icon.card-btn-icon {
+  @apply h-[16px] w-[16px] mr-[6px];
+}
+.card-btn-txt {
+  @apply text-[14px] leading-[1] tracking-[1.4px] font-[600];
+}
+/* match card */
+
+
+/* player profile */
+.player-container {
+  @apply w-screen bg-gradient-to-t from-[#001240] to-[#1a2a53];
+}
+.tabs-blocks {
+  @apply w-screen bg-white relative flex flex-col min-w-0 break-words bg-white w-full mb-6 rounded;
+}
+.player-header, .tab-content,.tabs-header {
+  @apply w-full max-w-[672px] mx-auto;
+}
+.player-header {
+  @apply mt-[5px] flex mb-0 list-none flex-wrap flex-col;
+}
+.player-profile-tabs {
+  @apply flex flex-wrap;
+}
+.tabs-header {
+  @apply bg-transparent flex relative;
+}
+.tab-li {
+  @apply -mb-px relative last:mr-0 flex-auto text-center cursor-pointer;
+}
+.tab-p {
+  @apply text-[14px] px-5 py-3 block leading-normal text-[#66718c];
+}
+.tab-p.active {
+  @apply text-white font-bold;
+}
+.active-indicator {
+  @apply content-[''] h-[4px] rounded-[3px_3px_0px_0px] w-1/2 bg-theme-secondary transition-all duration-500 absolute bottom-0;
+}
+.back-nav-box {
+  @apply py-[10px];
+}
+.player-image-box {
+  @apply max-w-[64px] max-h-[64px] md:max-w-[88px] md:max-h-[88px] bg-white rounded-full overflow-hidden;
+}
+.player-image {
+  @apply h-full w-full;
+}
+.player-name {
+  @apply text-white text-[18px] md:text-[20px] leading-[1.67] tracking-[0.36px] font-bold;
+}
+.player-role, .player-dob {
+  @apply text-[12px] h-max text-[#8089A0] leading-[1.33] tracking-[0.24px] ml-[8px]   text-center;
+}
+.info-icon-box {
+  @apply flex justify-center items-center w-[24px] h-[24px] rounded-full bg-[#1a2a53];
+}
+.back-arrow-box {
+  @apply h-[24px] w-[24px] cursor-pointer;
+}
+.info-icon {
+  @apply h-[16px] w-[16px];
+}
+.player-details-container, .player-role-box, .player-info-box, .player-dob-box {
+  @apply flex items-center;
+}
+.player-details-container {
+  @apply mt-[2px] mb-[34px] bg-theme-main pt-[5px] md:pt-0 md:bg-transparent;
+}
+.player-details-box {
+  @apply ml-[15px];
+}
+.player-info-box {
+  @apply mt-[6px] flex gap-[20px];
+}
+.tab-box {
+  @apply py-[24px];
+}
+.tab-content-title {
+  @apply text-[16px] font-[600] mb-[12px] leading-[1.38] tracking-[0.48px];
+}
+.tab-content-title-light {
+  @apply text-[16px] font-[400] mb-[12px] leading-[1.38] tracking-[0.48px] flex justify-between ;
+}
+.teams-list {
+  @apply text-[14px] leading-[1.43] tracking-[0.56px];
+}
+.capsule-header {
+  @apply flex justify-between items-start p-[8px] box-border w-full bg-[#f5f5f5] rounded-[6px] ;
+}
+.tbl-row {
+  @apply flex justify-between items-start p-[8px] box-border border-b-[1px] border-b-[#e6e7ec] last:border-b-0;
+}
+.tbl-cell {
+  @apply text-[11px] leading-[1.27] mt-[6px] w-[20%];
+}
+.career .tbl-cell {
+  @apply text-[14px];
+}
+.capsule-title {
+  @apply text-[10px] uppercase leading-[1.6] text-[#66718c] tracking-[1.4px] w-[20%];
+}
+.capsule-title-main, .tbl-cell-main {
+  @apply w-[40%];
+}
+.performance-grid{
+  @apply grid grid-cols-4;
+}
+.performance-block {
+  @apply mt-[12px];
+}
+.performance-block-data {
+  @apply text-[16px] text-[#141414] font-[600] leading-[1.38] tracking-[0.48px] text-left pl-[8px] mt-[8px];
+}
+.performance-block-title {
+  @apply text-[#66718c] bg-[#f0f1f4] h-[24px] text-[10px] leading-[1.6] tracking-[1.4px] flex items-center pl-[8px] uppercase whitespace-nowrap;
+}
+.career-content-title {
+  @apply text-[20px] tracking-[0.2px] font-[600] mr-[24px];
+}
+.statistics-pills-wrap {
+  @apply relative grid grid-cols-5 h-max items-center; 
+  /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr;*/
+}
+.statistics-pill {
+  @apply text-[14px] block transition-all duration-300 tracking-[0.56px] text-black leading-[1.43px] flex items-center justify-center h-[32px] font-[700];
+  /* text-white */
+}
+.statistics-pill.active {
+  @apply transition-all duration-300 h-full text-white rounded-[16px] bg-theme-secondary ;
+  /* 
+    left: calc(100% / 5 * 4);
+  */
+}
+.career-content-tabs {
+  @apply w-full flex justify-between mt-[24px];
+}
+/* player profile */

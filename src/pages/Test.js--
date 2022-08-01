@@ -1,0 +1,50 @@
+import React, { useEffect, useState } from 'react';
+import {FaRegImage} from 'react-icons/fa';
+import axios from 'axios';
+
+export default function Test() {
+
+  // const sportmonks = new SportmonksApi('NYF1FqiVZnU22X05JPoCKetWP5H3rmZV4kpnyVz5sHrFC3TQ1ZbwY3iXOuMn');
+  
+  const [innings, setInnings] = useState(['test']);
+
+  useEffect(() => {
+    (async () => {
+      // const response = await axios.get("https://api.cricapi.com/v1/matches?apikey=c2f651e7-ebf8-4442-a066-cb73138ed80a&offset=0");
+      // try {
+      //   const response = await fetch("https://api.cricapi.com/v1/match_info?apikey=c2f651e7-ebf8-4442-a066-cb73138ed80a&offset=0&id=820cfd88-3b56-4a6e-9dd8-1203051140da",
+      //   // const response = await fetch("https://cricket.sportmonks.com/api/v2.0/fixtures/3?api_token=NYF1FqiVZnU22X05JPoCKetWP5H3rmZV4kpnyVz5sHrFC3TQ1ZbwY3iXOuMn&include=localteam,visitorteam,bowling.team,batting.team,runs.team,bowling.bowler,batting.batsman",
+      //   { 
+      //     method: 'GET',
+      //     mode: 'cors',  
+      //   });
+      //   console.log(response);
+      //   setInnings(response);
+      // }catch(er) {
+      //   console.log(er.message);
+      // }
+
+      // var url = "https://cricket.sportmonks.com/api/v2.0/fixtures/3?api_token=NYF1FqiVZnU22X05JPoCKetWP5H3rmZV4kpnyVz5sHrFC3TQ1ZbwY3iXOuMn&include=localteam,visitorteam,bowling.team,batting.team,runs.team,bowling.bowler,batting.batsman";
+
+      // axios({
+      //   method: 'get',
+      //   url: `https://cricket.sportmonks.com/api/v2.0/fixtures/3`,
+      //   withCredentials: false,
+      //   params: {
+      //     access_token: 'NYF1FqiVZnU22X05JPoCKetWP5H3rmZV4kpnyVz5sHrFC3TQ1ZbwY3iXOuMn',
+      //   },
+      // }).then((res) => console.log(res));
+
+    })();
+  }, []);
+
+  if(innings.length === 0) return (<p>Loading....</p>);
+
+  return (
+    <div style={{textAlign: 'left'}}>
+      {/* <FaRegImage size={100} /> */}
+      <p>...done</p>
+      {/* <pre>{JSON.stringify(innings, null, 2)}</pre> */}
+    </div>
+  )
+}

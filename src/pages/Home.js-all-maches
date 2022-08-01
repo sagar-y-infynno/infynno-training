@@ -1,0 +1,43 @@
+import React, { useEffect, useState } from 'react';
+import MatchSlider from '../components/MatchSlider';
+import axios from 'axios';
+
+export default function Home() {
+
+  const [allMatches, setAllMatches] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const url = encodeURIComponent("https://cricket.sportmonks.com/api/v2.0/fixtures?api_token=pCKbJYBnFQkyAqEEfEgQAGkFDCHYjeV7PwTpvC6qtCN9wa6mp3aJ512MJjYh&include=localteam,visitorteam,runs.team,league");
+      const res = await axios.get(`https://api.allorigins.win/raw?url=${url}`);
+      
+      let finished_matches = res.data.data.filter((m) => m.status === "Finished");
+      let same_matches = res.data.data.filter((m) => m.stage_id === 24);
+      console.log(same_matches);
+      setAllMatches({
+        live_matches: finished_matches.splice(0, 15), //null,
+        upcoming_matches: null,
+        finished_matches: null //finished_matches.splice(0, 15)
+      });
+
+    })();
+  }, []);
+
+  if(allMatches.length === 0) {
+    return <p>Loading...</p>
+  }
+
+  return (
+    <>
+      {allMatches.live_matches && 
+        <MatchSlider matches={allMatches.live_matches} sliderTitle="Live Matches" showDots={true} sliderType="live-match" />
+      }
+      {allMatches.finished_matches && 
+        <MatchSlider matches={allMatches.finished_matches} sliderTitle="Recent Matches" sliderType="finished-match" showDots={false} />
+      }
+      {allMatches.upcoming_matches && 
+        <MatchSlider matches={allMatches.upcoming_matches} sliderTitle="Upcoming Matches" sliderType="upcoming-match" showDots={false} />
+      }
+    </>
+  )
+}

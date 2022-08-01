@@ -1,0 +1,260 @@
+import React from 'react';
+import Slider from "react-slick";
+
+export default function MatchSlider({matches, sliderType, sliderTitle, showDots}) {
+  const btnTitle = "Score Card";
+  // const sliderType = "live-match";
+  const settings = {
+    dots: showDots,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: showDots
+        }
+      },
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  };
+
+  return (
+    <div className={`match-slider-container ${sliderType}`}>
+      { sliderType  === "live-match" ?
+        <div className="match-grid-header pt-[20px] pb-[16px] bg-theme-main w-screen">
+            <h2 className="text-white font-bold w-full max-w-[1024px] mx-auto leading-[1.6] tracking-[0.2px] text-[20px]">{sliderTitle}</h2>
+        </div>
+        :
+        <div className="match-grid-header pt-[20px] pb-[16px] w-screen">
+            <h2 className="text-theme-main font-bold w-full max-w-[1024px] mx-auto leading-[1.6] tracking-[0.2px] text-[20px]">{sliderTitle}</h2>
+        </div>
+        }
+        <div className={`live-matches-wrap relative w-screen mx-auto ${ sliderType === "live-match" &&
+        "before:content-[''] before:h-[50%] before:w-full before:absolute before:top-0 before:bg-theme-main"} `}> 
+        <div className="relative mx-[auto] match-grid max-w-[1024px] w-screen">
+        <Slider {...settings}>
+        {/* card */}
+            <div className="match-card px-[8px] rounded-[12px] h-[200px] overflow-hidden relative w-full no-underline">
+              <div className="match-card-top rounded-[12px] relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[40%] after:content-[''] after:bg-gradient-to-b after:from-[#00000000] after:to-[#000000] flex justify-center items-end h-[50%] bg-center bg-no-repeat bg-cover bg-[url('https://images.fancode.com/eyJrZXkiOiJza2lsbHVwLXVwbG9hZHMvcHJvZC1pbWFnZXMvMjAyMi8wNy9JQ0MtVDIwLVdvcmxkLUN1cC1FdXJvcGUtUXVhbGlmaWVyLUFfTWF0Y2gtQ2FyZF8wMi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsiZml0IjoiY292ZXIiLCJoZWlnaHQiOjY2LjY2NjY2ODY1MzQ4ODE2LCJ3aWR0aCI6MjE4LjY2NjY3MzE4MzQ0MTE2LCJwb3NpdGlvbiI6InRvcCJ9fX0=')] ">
+                <p className="mb-[26px] text-white uppercase text-[10px] leading-[1.6] tracking-[1.4px] text-ellipsis w-[90%] whitespace-nowrap">1st Test Pakistan tour of Sri Lanka, 2022</p>
+              </div>
+              <div className="match-card-btn-wrap absolute z-[99] w-full flex items-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-max">
+                <button className='match-card-btn shadow-[0_2px_6px_0px_rgba(0,_0,_0,_0.15)] mx-auto w-max px-[12px] uppercase  tracking-[1.4px] pb-[6px] pt-[4px] text-theme-secondary score-btn bg-white rounded-full flex items-center justify-center '>{btnTitle}</button>
+              </div>
+              <div className="match-card-details border-t-0 pb-[8px] border border-[#e6e6e6] pt-[22px] rounded-[0px_0px_12px_12px]">
+                <div className="w-full">
+                  <div className="flex justify-around w-full ">
+                    <div className="">
+                      <div className="flex items-center">
+                        <div className="flex flex-col justify-center items-center">
+                          <div className="h-[32px] w-[32px]">
+                            <img className="h-full w-full" src="https://d13ir53smqqeyp.cloudfront.net/flags/cr-flags/FC-IRE@2x.png" alt="team logo" />
+                          </div>
+                          <label className="text-[10px] tracking-[1.4px]">IRI</label>
+                        </div>
+                        <div className='flex flex-col ml-[10px]'>
+                          <span className='text-[#666666] font-bold text-[14px] ' >222/10</span>
+                          {/* <span >222/10</span> */}
+                          <span className='text-[#666666] font-normal text-[12px] ' >45.5 overs</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex relative justify-center items-center">
+                      <div className="bg-[#dcdcdc] w-[1px] h-[40px] "></div>
+                      <label className="text-[10px] absolute block leading-[16px] text-center text-white bg-[#dcdcdc] h-[16px] w-[16px] rounded-full">V</label>
+                    </div>
+                    <div className="">
+                      <div className="flex items-center">
+                        <div className='flex flex-col mr-[10px]'>
+                          <span className='text-[#666666] text-right font-bold text-[14px] ' >222/10</span>
+                          {/* <span >222/10</span> */}
+                          <span className='text-[#666666] text-right font-normal text-[12px] ' >45.5 overs</span>
+                        </div>
+                        <div className="flex flex-col justify-center items-center">
+                          <div className="h-[32px] w-[32px]">
+                            <img  className="h-full w-full" src="https://d13ir53smqqeyp.cloudfront.net/flags/cr-flags/FC-NZCC@2x.png"  alt="team logo" />
+                          </div>
+                          <label className="text-[10px] tracking-[1.4px]">NZL</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-[12px] leading-[1.33] tracking-[0.24px] text-center">Match Starts at 8:30 PM</div>
+                </div>
+              </div>
+            </div>
+        {/* card */}
+
+        <div className="match-card px-[8px] rounded-[12px] h-[200px] overflow-hidden relative w-full no-underline">
+          <div className="match-card-top rounded-[12px] relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[40%] after:content-[''] after:bg-gradient-to-b after:from-[#00000000] after:to-[#000000] flex justify-center items-end h-[50%] bg-center bg-no-repeat bg-cover bg-[url('https://images.fancode.com/eyJrZXkiOiJza2lsbHVwLXVwbG9hZHMvcHJvZC1pbWFnZXMvMjAyMi8wNy9JQ0MtVDIwLVdvcmxkLUN1cC1FdXJvcGUtUXVhbGlmaWVyLUFfTWF0Y2gtQ2FyZF8wMi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsiZml0IjoiY292ZXIiLCJoZWlnaHQiOjY2LjY2NjY2ODY1MzQ4ODE2LCJ3aWR0aCI6MjE4LjY2NjY3MzE4MzQ0MTE2LCJwb3NpdGlvbiI6InRvcCJ9fX0=')] ">
+            <p className="mb-[26px] text-white uppercase text-[10px] leading-[1.6] tracking-[1.4px] text-ellipsis w-[90%] whitespace-nowrap">1st Test Pakistan tour of Sri Lanka, 2022</p>
+          </div>
+          <div className="match-card-btn-wrap absolute z-[99] w-full flex items-center translate-y-[-50%] top-[50%] h-max">
+            <button className='match-card-btn shadow-[0_2px_6px_0px_rgba(0,_0,_0,_0.15)] mx-auto w-max px-[12px] uppercase  tracking-[1.4px] pb-[6px] pt-[4px] text-theme-secondary score-btn bg-white rounded-full flex items-center justify-center '>{btnTitle}</button>
+          </div>
+          <div className="match-card-details border-t-0 pb-[8px] border border-[#e6e6e6] pt-[22px] rounded-[0px_0px_12px_12px]">
+            <div className="w-full">
+              <div className="flex justify-around w-full ">
+                <div className="">
+                  <div className="flex items-center">
+                    <div className="flex flex-col justify-center items-center">
+                      <div className="h-[32px] w-[32px]">
+                        <img className="h-full w-full" src="https://d13ir53smqqeyp.cloudfront.net/flags/cr-flags/FC-IRE@2x.png" alt="team logo" />
+                      </div>
+                      <label className="text-[10px] tracking-[1.4px]">IRI</label>
+                    </div>
+                    <div className='flex flex-col ml-[10px]'>
+                      <span className='text-[#666666] font-bold text-[14px] ' >222/10</span>
+                      {/* <span >222/10</span> */}
+                      <span className='text-[#666666] font-normal text-[12px] ' >45.5 overs</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex relative justify-center items-center">
+                  <div className="bg-[#dcdcdc] w-[1px] h-[40px] "></div>
+                  <label className="text-[10px] absolute block leading-[16px] text-center text-white bg-[#dcdcdc] h-[16px] w-[16px] rounded-full">V</label>
+                </div>
+                <div className="">
+                  <div className="flex items-center">
+                    <div className='flex flex-col mr-[10px]'>
+                      <span className='text-[#666666] text-right font-bold text-[14px] ' >222/10</span>
+                      {/* <span >222/10</span> */}
+                      <span className='text-[#666666] text-right font-normal text-[12px] ' >45.5 overs</span>
+                    </div>
+                    <div className="flex flex-col justify-center items-center">
+                      <div className="h-[32px] w-[32px]">
+                        <img  className="h-full w-full" src="https://d13ir53smqqeyp.cloudfront.net/flags/cr-flags/FC-NZCC@2x.png"  alt="team logo" />
+                      </div>
+                      <label className="text-[10px] tracking-[1.4px]">NZL</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="text-[12px] leading-[1.33] tracking-[0.24px] text-center">Match Starts at 8:30 PM</div>
+            </div>
+          </div>
+        </div>
+        <div className="match-card px-[8px] rounded-[12px] h-[200px] overflow-hidden relative w-full no-underline">
+          <div className="match-card-top rounded-[12px] relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[40%] after:content-[''] after:bg-gradient-to-b after:from-[#00000000] after:to-[#000000] flex justify-center items-end h-[50%] bg-center bg-no-repeat bg-cover bg-[url('https://images.fancode.com/eyJrZXkiOiJza2lsbHVwLXVwbG9hZHMvcHJvZC1pbWFnZXMvMjAyMi8wNy9JQ0MtVDIwLVdvcmxkLUN1cC1FdXJvcGUtUXVhbGlmaWVyLUFfTWF0Y2gtQ2FyZF8wMi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsiZml0IjoiY292ZXIiLCJoZWlnaHQiOjY2LjY2NjY2ODY1MzQ4ODE2LCJ3aWR0aCI6MjE4LjY2NjY3MzE4MzQ0MTE2LCJwb3NpdGlvbiI6InRvcCJ9fX0=')] ">
+            <p className="mb-[26px] text-white uppercase text-[10px] leading-[1.6] tracking-[1.4px] text-ellipsis w-[90%] whitespace-nowrap">1st Test Pakistan tour of Sri Lanka, 2022</p>
+          </div>
+          <div className="match-card-btn-wrap absolute z-[99] w-full flex items-center translate-y-[-50%] top-[50%] h-max">
+            <button className='match-card-btn shadow-[0_2px_6px_0px_rgba(0,_0,_0,_0.15)] mx-auto w-max px-[12px] uppercase  tracking-[1.4px] pb-[6px] pt-[4px] text-theme-secondary score-btn bg-white rounded-full flex items-center justify-center '>{btnTitle}</button>
+          </div>
+          <div className="match-card-details border-t-0 pb-[8px] border border-[#e6e6e6] pt-[22px] rounded-[0px_0px_12px_12px]">
+            <div className="w-full">
+              <div className="flex justify-around w-full ">
+                <div className="">
+                  <div className="flex items-center">
+                    <div className="flex flex-col justify-center items-center">
+                      <div className="h-[32px] w-[32px]">
+                        <img className="h-full w-full" src="https://d13ir53smqqeyp.cloudfront.net/flags/cr-flags/FC-IRE@2x.png" alt="team logo" />
+                      </div>
+                      <label className="text-[10px] tracking-[1.4px]">IRI</label>
+                    </div>
+                    <div className='flex flex-col ml-[10px]'>
+                      <span className='text-[#666666] font-bold text-[14px] ' >222/10</span>
+                      {/* <span >222/10</span> */}
+                      <span className='text-[#666666] font-normal text-[12px] ' >45.5 overs</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex relative justify-center items-center">
+                  <div className="bg-[#dcdcdc] w-[1px] h-[40px] "></div>
+                  <label className="text-[10px] absolute block leading-[16px] text-center text-white bg-[#dcdcdc] h-[16px] w-[16px] rounded-full">V</label>
+                </div>
+                <div className="">
+                  <div className="flex items-center">
+                    <div className='flex flex-col mr-[10px]'>
+                      <span className='text-[#666666] text-right font-bold text-[14px] ' >222/10</span>
+                      {/* <span >222/10</span> */}
+                      <span className='text-[#666666] text-right font-normal text-[12px] ' >45.5 overs</span>
+                    </div>
+                    <div className="flex flex-col justify-center items-center">
+                      <div className="h-[32px] w-[32px]">
+                        <img  className="h-full w-full" src="https://d13ir53smqqeyp.cloudfront.net/flags/cr-flags/FC-NZCC@2x.png"  alt="team logo" />
+                      </div>
+                      <label className="text-[10px] tracking-[1.4px]">NZL</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="text-[12px] leading-[1.33] tracking-[0.24px] text-center">Match Starts at 8:30 PM</div>
+            </div>
+          </div>
+        </div>
+        <div className="match-card px-[8px] rounded-[12px] h-[200px] overflow-hidden relative w-full no-underline">
+          <div className="match-card-top rounded-[12px] relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[40%] after:content-[''] after:bg-gradient-to-b after:from-[#00000000] after:to-[#000000] flex justify-center items-end h-[50%] bg-center bg-no-repeat bg-cover bg-[url('https://images.fancode.com/eyJrZXkiOiJza2lsbHVwLXVwbG9hZHMvcHJvZC1pbWFnZXMvMjAyMi8wNy9JQ0MtVDIwLVdvcmxkLUN1cC1FdXJvcGUtUXVhbGlmaWVyLUFfTWF0Y2gtQ2FyZF8wMi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsiZml0IjoiY292ZXIiLCJoZWlnaHQiOjY2LjY2NjY2ODY1MzQ4ODE2LCJ3aWR0aCI6MjE4LjY2NjY3MzE4MzQ0MTE2LCJwb3NpdGlvbiI6InRvcCJ9fX0=')] ">
+            <p className="mb-[26px] text-white uppercase text-[10px] leading-[1.6] tracking-[1.4px] text-ellipsis w-[90%] whitespace-nowrap">1st Test Pakistan tour of Sri Lanka, 2022</p>
+          </div>
+          <div className="match-card-btn-wrap absolute z-[99] w-full flex items-center translate-y-[-50%] top-[50%] h-max">
+            <button className='match-card-btn shadow-[0_2px_6px_0px_rgba(0,_0,_0,_0.15)] mx-auto w-max px-[12px] uppercase  tracking-[1.4px] pb-[6px] pt-[4px] text-theme-secondary score-btn bg-white rounded-full flex items-center justify-center '>{btnTitle}</button>
+          </div>
+          <div className="match-card-details border-t-0 pb-[8px] border border-[#e6e6e6] pt-[22px] rounded-[0px_0px_12px_12px]">
+            <div className="w-full">
+              <div className="flex justify-around w-full ">
+                <div className="">
+                  <div className="flex items-center">
+                    <div className="flex flex-col justify-center items-center">
+                      <div className="h-[32px] w-[32px]">
+                        <img className="h-full w-full" src="https://d13ir53smqqeyp.cloudfront.net/flags/cr-flags/FC-IRE@2x.png" alt="team logo" />
+                      </div>
+                      <label className="text-[10px] tracking-[1.4px]">IRI</label>
+                    </div>
+                    <div className='flex flex-col ml-[10px]'>
+                      <span className='text-[#666666] font-bold text-[14px] ' >222/10</span>
+                      {/* <span >222/10</span> */}
+                      <span className='text-[#666666] font-normal text-[12px] ' >45.5 overs</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex relative justify-center items-center">
+                  <div className="bg-[#dcdcdc] w-[1px] h-[40px] "></div>
+                  <label className="text-[10px] absolute block leading-[16px] text-center text-white bg-[#dcdcdc] h-[16px] w-[16px] rounded-full">V</label>
+                </div>
+                <div className="">
+                  <div className="flex items-center">
+                    <div className='flex flex-col mr-[10px]'>
+                      <span className='text-[#666666] text-right font-bold text-[14px] ' >222/10</span>
+                      {/* <span >222/10</span> */}
+                      <span className='text-[#666666] text-right font-normal text-[12px] ' >45.5 overs</span>
+                    </div>
+                    <div className="flex flex-col justify-center items-center">
+                      <div className="h-[32px] w-[32px]">
+                        <img  className="h-full w-full" src="https://d13ir53smqqeyp.cloudfront.net/flags/cr-flags/FC-NZCC@2x.png"  alt="team logo" />
+                      </div>
+                      <label className="text-[10px] tracking-[1.4px]">NZL</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="text-[12px] leading-[1.33] tracking-[0.24px] text-center">Match Starts at 8:30 PM</div>
+            </div>
+          </div>
+        </div>
+
+        </Slider>
+        </div>
+      </div>
+    </div>
+  )
+}
