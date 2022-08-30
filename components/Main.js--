@@ -1,0 +1,259 @@
+import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
+import ReactPaginate from 'react-paginate';
+import MakeSelect from '../components/MakeSelect';
+import Slider, { Range } from 'rc-slider';
+import 'rc-slider/assets/index.css';
+
+// import axios from 'axios';
+
+const tipFormatter = (v) => {
+  console.log(v);
+  return (
+    <div style={{border: "1px solid ", padding: "5px"}}>
+      <p>{v}</p>
+    </div>
+  );
+}
+
+export default function Main(props) {
+  const [miles, setMiles] = useState(20);
+  // const [car_collection, setCarCollection] = useState('');
+  // const [cur_page, setCurPage] = useState(1);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const {data} = await axios.get(`https://autodigg.com/ad-api/cars/list?usedCar=true&car_type=Used+car&page=${cur_page}&radius=100`);
+  //     console.log(data[0].photos[0]);
+  //     setCarCollection(data[1].photos[0]);
+  //   })();
+  // }, [props.cur_page]);
+
+  const PaginationHandler = (event) => {
+    console.log("page changes...", event.selected);
+    // setCurPage(event.selected+1);
+  }
+
+  return (
+    <div className="main-page main-container">
+
+      <div className="page-header">
+        <span className='page-subtitle' >Used cars for sale</span>
+        <p className='page-title' >Showing 1,234 cars</p>
+      </div>
+
+      <div className="page-main">
+        {/* filter block */}
+        <div className="filter-block" >
+          <div className="filter-block-head" >
+            <p className="filter-block-title" >Filter by</p>
+          </div>
+          <div className="filter-options-container">
+            <div className="filter-option-box">
+              <div className="filter-option-box-head">
+                <p className="filter-option-title">Car type</p>
+              </div>
+              <div className="filter-option-box-main">
+                <div className="chkbox-wrapper">
+                  <div className="chkbox-field">
+                    <input id="new_chk" type="checkbox" className='filter-checkbox' value="new"/>
+                    <label htmlFor="new_chk" >New</label>
+                  </div>
+                  <div className="chkbox-field">
+                    <input id="new_chk" type="checkbox" className='filter-checkbox' value="new"/>
+                    <label htmlFor="new_chk" >Used</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="filter-option-box no-border">
+              <div className="filter-option-box-head">
+                <p className="filter-option-title">Your ZIP</p>
+              </div>
+              <div className="filter-option-box-main">
+                <input type="text" className="filter-zip-text" />
+                <Image className="zip-arrow" src="/images/arrow-orange.svg"  height={20} width={15} />
+              </div>
+            </div>
+
+            <div className="filter-option-box">
+              <div className="filter-option-box-head">
+                <p className="filter-option-title">Search within</p>
+                <span>100 miles</span>
+              </div>
+              <div className="filter-option-box-main">
+                <Slider
+                  min={20}
+                  max={500}
+                  handleStyle={{
+                    height: "20px",
+                    width: "20px",
+                    background: "linear-gradient(147.14deg, #FF8800 6.95%, #E63535 93.05%)",
+                    border: "2px solid #FFFFFF",
+                    boxShadow: "0px 3px 7px -1px rgba(254, 110, 6, 0.46)",
+                    borderRadius: "20px",
+                    marginTop: "-7px",
+                    opacity: "1"
+                  }}
+
+                  trackStyle={{
+                    background: "linear-gradient(147.14deg, #FF8800 6.95%, #E63535 93.05%)",
+                    height: "6px"
+                  }}
+
+                  railStyle={{
+                    background: "#EBEBF0",
+                    height: "6px"
+                  }}
+
+                  // tipFormatter={TipFormatter}
+
+                  value={miles}
+
+                  onChange={(v) => setMiles(v)}
+
+                  // tipProps={{
+                    placement='top'
+                    // prefixCls='rc-slider-tooltip',
+                    overlay={(val) => `${val} %`}
+                    // visible={true}
+                  // }}
+                />
+                {/* <Range /> */}
+              </div>
+            </div>
+
+            <div className="filter-option-box">
+              <div className="filter-option-box-head">
+                <p className="filter-option-title">Make</p>
+              </div>
+              <div className="filter-option-box-main">
+                <MakeSelect />
+              </div>
+            </div>
+
+            <div className="filter-option-box">
+              <div className="filter-option-box-head">
+                <p className="filter-option-title">Model</p>
+              </div>
+              <div className="filter-option-box-main">
+              </div>
+            </div>
+
+            <div className="filter-option-box">
+              <div className="filter-option-box-head">
+                <p className="filter-option-title">Body type</p>
+              </div>
+              <div className="filter-option-box-main">
+              </div>
+            </div>
+
+            <div className="filter-option-box">
+              <div className="filter-option-box-head">
+                <p className="filter-option-title">Price</p>
+                <span>$0 - $1,000</span>
+              </div>
+              <div className="filter-option-box-main">
+              </div>
+            </div>
+
+            <div className="filter-option-box">
+              <div className="filter-option-box-head">
+                <p className="filter-option-title">Make year</p>
+              </div>
+              <div className="filter-option-box-main">
+              </div>
+            </div>
+
+            <div className="filter-option-box">
+              <div className="filter-option-box-head">
+                <p className="filter-option-title">Mileage</p>
+              </div>
+              <div className="filter-option-box-main">
+              </div>
+            </div>
+
+            {/* <div className="filter-drop-option-box"></div> */}
+
+          </div>
+        </div>
+        {/* filter block */}
+        {/* card list block */}
+        <div className="card-list-block">
+          <div className="card-list-wrap">
+          {/* card */}
+            <div className="auto-card">
+              <div className="card-container" >
+                <div className="car-image-box">
+                  <Image src="/images/demo-car.svg" layout='responsive' alt="cars" width={360} height={254} />
+                  {/* <Image src={props?.car_collection} layout='responsive' alt="cars" width={360} height={254} /> */}
+                </div>
+                <div className="car-details-box">
+                  <div className='card-details-top' >
+                    <p className="card-car-name">2022 Ford F-250 Super Duty</p>
+                    <p className="card-info-name">2022 Ford F-250 Super Duty</p>
+                    <p className="card-info-name">Austin, Texas</p>
+                  </div>
+                  <div className='card-details-bottom' >
+                    <div className="car-price-box">
+                      <p className="font-[600] text-[28px] leading-[38px] text-[#28293D]" >$87,698</p>
+                      <Image src="/images/info.svg" height={16} width={16} alt='info' />
+                    </div>
+                    <button className='card-action-btn'>
+                      <span>Invite dealer</span>
+                      <Image src="/images/arrow.svg" alt="arrow" layout="fixed" width={15} height={24} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+              {/* <div className="car-offers-box"></div> */}
+              <div className="p-[16px_24px] bg-[#fff8e6] cursor-pointer">
+                <div className="flex items-center">
+                  <Image src="/images/green-star.svg" height="20px" width="15px" alt="Special Offers" />
+                  <p className="ml-[4px] text-[12px] font-[600] leading-[20px] text-[#05A660] uppercase">Special Offers</p>
+                </div>
+                <div className='flex items-center gap-[16px]'>
+                  <p className="flex items-center gap-[6px]">
+                    <span className="h-[4px] w-[4px] rounded-[2px] bg-black mr-[4px] block"></span>
+                    <span>100% credit approval guaranteed</span>
+                  </p>
+                  <p className="flex items-center gap-[6px]">
+                  <span className="h-[4px] w-[4px] rounded-[2px] bg-black mr-[4px]" block></span>
+                  <span>Complimentary 101pt safety check</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          {/* card */}
+          </div>
+          <div className="pagination-block">
+            <ReactPaginate
+              className='pagination-box'
+              breakLabel="..."
+              nextLabel=">"
+              nextClassName='pagination-btn page-nav page-next'
+              previousClassName='pagination-btn page-nav page-prev'
+              pageClassName='pagination-btn page-num'
+              activeClassName='pagination-btn page-num page-active'
+              breakClassName='pagination-btn'
+              onPageChange={PaginationHandler}
+              pageRangeDisplayed={5}
+              pageCount={64}
+              previousLabel="<"
+              marginPagesDisplayed={1}
+              renderOnZeroPageCount={null}
+            />
+          </div>
+          
+          <div className="why-autodigg-block">
+            <p className='why-title' >Why Autodigg?</p>
+            <span className='why-content' >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet. Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</span>
+          </div>
+        </div>
+        {/* card list block */}
+      </div>
+
+    </div>
+  )
+}
